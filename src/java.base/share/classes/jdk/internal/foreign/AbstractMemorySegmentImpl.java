@@ -145,10 +145,15 @@ public abstract sealed class AbstractMemorySegmentImpl
         Reflection.ensureNativeAccess(callerClass, MemorySegment.class, "reinterpret", false);
         Utils.checkNonNegativeArgument(newSize, "newSize");
         if (!isNative()) throw new UnsupportedOperationException("Not a native segment");
-        Runnable action = cleanup != null ?
-                () -> cleanup.accept(SegmentFactories.makeNativeSegmentUnchecked(address(), newSize)) :
-                null;
+        Runnable action = cleanupAction(address(), newSize, cleanup);
         return SegmentFactories.makeNativeSegmentUnchecked(address(), newSize, scope, readOnly, action);
+    }
+
+    // Using a static helper method ensures there is no unintended lambda capturing of `this`
+    private static Runnable cleanupAction(long address, long newSize, Consumer<MemorySegment> cleanup) {
+        return cleanup != null ?
+                () -> cleanup.accept(SegmentFactories.makeNativeSegmentUnchecked(address, newSize)) :
+                null;
     }
 
     private AbstractMemorySegmentImpl asSliceNoCheck(long offset, long newSize) {
@@ -889,23 +894,27 @@ public abstract sealed class AbstractMemorySegmentImpl
         layout.varHandle().set((MemorySegment)this, index * layout.byteSize(), value);
     }
 
+    @ForceInline
     @Override
     public String getString(long offset) {
         return getString(offset, sun.nio.cs.UTF_8.INSTANCE);
     }
 
+    @ForceInline
     @Override
     public String getString(long offset, Charset charset) {
         Objects.requireNonNull(charset);
         return StringSupport.read(this, offset, charset);
     }
 
+    @ForceInline
     @Override
     public void setString(long offset, String str) {
         Objects.requireNonNull(str);
         setString(offset, str, sun.nio.cs.UTF_8.INSTANCE);
     }
 
+    @ForceInline
     @Override
     public void setString(long offset, String str, Charset charset) {
         Objects.requireNonNull(charset);
