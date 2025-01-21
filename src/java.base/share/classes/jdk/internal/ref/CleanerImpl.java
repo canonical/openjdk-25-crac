@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import jdk.internal.crac.mirror.Context;
 import jdk.internal.crac.mirror.Resource;
@@ -144,16 +146,14 @@ public final class CleanerImpl implements Runnable, JDKResource {
                 mlThread.eraseThreadLocals();
             }
             if (forceCleanup) {
-                ArrayList<PhantomCleanable<?>> refArr = new ArrayList<>();
-                synchronized (phantomCleanableList) {
-                    for (var ref = phantomCleanableList.next; ref != phantomCleanableList; ref = ref.next) {
-                        if (ref.refersTo(null)) {
-                            refArr.add(ref);
-                        }
-                    }
+                synchronized (activeList) {
+                    Object[] refArr = activeList.filterReferences(ref -> ref.refersTo(null));
                     for (var ref : refArr) {
+
                         try {
-                            ref.clean();
+                            if (ref instanceof PhantomCleanable<?> pcref) {
+                                pcref.clean();
+                            }
                         } catch (Throwable e) {
                             // ignore exceptions from the cleanup action
                         }
@@ -186,7 +186,7 @@ public final class CleanerImpl implements Runnable, JDKResource {
 
     @Override
     public synchronized void beforeCheckpoint(Context<? extends Resource> context) throws Exception {
-        if (phantomCleanableList.isListEmpty()) {
+        if (activeList.isEmpty()) {
             // The thread is already terminated; don't wait for anything
             return;
         }
@@ -311,6 +311,16 @@ public final class CleanerImpl implements Runnable, JDKResource {
             reset();
         }
 
+        Object[] filterReferences(Predicate<PhantomCleanable<?>> condition) {
+            Stream<PhantomCleanable<?>> filtered = Stream.empty();
+            Node current = head;
+            while (current != null) {
+                filtered = Stream.concat(filtered, current.filter(condition));
+                current = current.next;
+            }
+            return filtered.toArray();
+        }
+
         /**
          * Testing support: reset list to initial state.
          */
@@ -412,6 +422,11 @@ public final class CleanerImpl implements Runnable, JDKResource {
 
             // Linked list structure.
             Node next;
+
+            Stream<PhantomCleanable<?>> filter(Predicate<PhantomCleanable<?>> predicate) {
+                return Stream.of(arr)
+                             .filter(predicate);
+            }
         }
     }
 }
