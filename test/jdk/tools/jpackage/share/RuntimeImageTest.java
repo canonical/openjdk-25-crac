@@ -54,8 +54,7 @@ public class RuntimeImageTest {
         .dumpOutput()
         .addArguments(
                 "--output", jlinkOutputDir.toString(),
-                "--add-modules", "ALL-MODULE-PATH",
-                "--module-path", jmods.toString(),
+                "--add-modules", "java.desktop",
                 "--strip-debug",
                 "--no-header-files",
                 "--no-man-pages",
