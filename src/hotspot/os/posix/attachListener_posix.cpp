@@ -278,16 +278,16 @@ void PosixAttachOperation::effectively_complete_raw(jint result, bufferedStream*
 void PosixAttachOperation::write_operation_result(jint result, bufferedStream* st) {
   char msg[32];
   os::snprintf_checked(msg, sizeof(msg), "%d\n", result);
-  int rc = PosixAttachListener::write_fully(this->socket(), msg, strlen(msg));
+  int rc = this->write_fully(msg, strlen(msg));
 
   // write any result data
   if (rc == 0) {
-    PosixAttachListener::write_fully(this->socket(), (char*) st->base(), st->size());
-    ::shutdown(this->socket(), SHUT_RDWR);
+    this->write_fully((char*) st->base(), st->size());
+    this->shutdown();
   }
 
   // done
-  ::close(this->socket());
+  this->close();
   st->reset();
 }
 

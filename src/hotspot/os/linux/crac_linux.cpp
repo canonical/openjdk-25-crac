@@ -276,8 +276,7 @@ bool VM_Crac::is_socket_from_jcmd(int sock) {
 #if INCLUDE_SERVICES
   if (_attach_op == NULL)
     return false;
-  int sock_fd = _attach_op->socket();
-  return sock == sock_fd;
+  return _attach_op->socket_equals(sock);
 #else
   return false;
 #endif

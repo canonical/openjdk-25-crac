@@ -32,10 +32,67 @@ class PosixAttachOperation;
 
 #if INCLUDE_SERVICES
 
+class SocketChannel : public AttachOperation::RequestReader, public AttachOperation::ReplyWriter {
+private:
+  int _socket;
+public:
+  SocketChannel(int socket) : _socket(socket) {}
+  ~SocketChannel() {
+    close();
+  }
+
+  bool opened() const {
+    return _socket != -1;
+  }
+
+  void close() {
+    if (opened()) {
+      ::close(_socket);
+      _socket = -1;
+    }
+  }
+
+  // RequestReader
+  int read(void* buffer, int size) override {
+    ssize_t n;
+    RESTARTABLE(::read(_socket, buffer, (size_t)size), n);
+    return checked_cast<int>(n);
+  }
+
+  // ReplyWriter
+  int write(const void* buffer, int size) override {
+    ssize_t n;
+    RESTARTABLE(::write(_socket, buffer, size), n);
+    return checked_cast<int>(n);
+  }
+  // called after writing all data
+  void flush() override {
+    ::shutdown(_socket, SHUT_RDWR);
+  }
+
+  int write_fully(char* buf, size_t len) {
+    do {
+      ssize_t n = ::write(_socket, buf, len);
+      if (n == -1) {
+        if (errno != EINTR) return -1;
+      } else {
+        buf += n;
+        len -= n;
+      }
+    }
+    while (len > 0);
+    return 0;
+  }
+
+  bool equals(int socket) {
+    return socket == _socket;
+  }
+};
+
 class PosixAttachOperation: public AttachOperation {
  private:
   // the connection to the client
-  int _socket;
+  SocketChannel _socket_channel;
   bool _effectively_completed;
   void write_operation_result(jint result, bufferedStream* st);
 
@@ -44,12 +101,27 @@ class PosixAttachOperation: public AttachOperation {
   void effectively_complete_raw(jint res, bufferedStream* st);
   bool is_effectively_completed()                      { return _effectively_completed; }
 
-  void set_socket(int s)                                { _socket = s; }
-  int socket() const                                    { return _socket; }
+  PosixAttachOperation(int socket) : AttachOperation(), _socket_channel(socket) {
+  }
 
-  PosixAttachOperation(char* name) : AttachOperation(name) {
-    set_socket(-1);
-    _effectively_completed = false;
+  bool read_request() {
+    return AttachOperation::read_request(&_socket_channel, &_socket_channel);
+  }
+
+  int write_fully(char* buf, size_t len) {
+    return _socket_channel.write_fully(buf, len);
+  }
+
+  void close() {
+    _socket_channel.close();
+  }
+
+  void shutdown() {
+    _socket_channel.flush();
+  }
+
+  bool socket_equals(int socket) {
+    return _socket_channel.equals(socket);
   }
 };
 
