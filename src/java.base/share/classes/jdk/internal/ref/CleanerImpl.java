@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import jdk.internal.crac.mirror.Context;
 import jdk.internal.crac.mirror.Resource;
@@ -147,13 +148,10 @@ public final class CleanerImpl implements Runnable, JDKResource {
             }
             if (forceCleanup) {
                 synchronized (activeList) {
-                    Object[] refArr = activeList.filterReferences(ref -> ref.refersTo(null));
+		    ArrayList<PhantomCleanable<?>> refArr = activeList.filterReferences(ref -> ref.refersTo(null));
                     for (var ref : refArr) {
-
                         try {
-                            if (ref instanceof PhantomCleanable<?> pcref) {
-                                pcref.clean();
-                            }
+                            ref.clean();
                         } catch (Throwable e) {
                             // ignore exceptions from the cleanup action
                         }
@@ -311,14 +309,14 @@ public final class CleanerImpl implements Runnable, JDKResource {
             reset();
         }
 
-        Object[] filterReferences(Predicate<PhantomCleanable<?>> condition) {
-            Stream<PhantomCleanable<?>> filtered = Stream.empty();
+        synchronized ArrayList<PhantomCleanable<?>> filterReferences(Predicate<PhantomCleanable<?>> condition) {
+	    ArrayList<PhantomCleanable<?>> refArr = new ArrayList<>();
             Node current = head;
             while (current != null) {
-                filtered = Stream.concat(filtered, current.filter(condition));
+                refArr.addAll(current.filter(condition));
                 current = current.next;
             }
-            return filtered.toArray();
+            return refArr;
         }
 
         /**
@@ -423,9 +421,11 @@ public final class CleanerImpl implements Runnable, JDKResource {
             // Linked list structure.
             Node next;
 
-            Stream<PhantomCleanable<?>> filter(Predicate<PhantomCleanable<?>> predicate) {
+            ArrayList<PhantomCleanable<?>> filter(Predicate<PhantomCleanable<?>> predicate) {
                 return Stream.of(arr)
-                             .filter(predicate);
+			     .filter(ref -> ref != null)
+			     .filter(predicate)
+			     .collect(Collectors.toCollection(ArrayList::new));
             }
         }
     }
