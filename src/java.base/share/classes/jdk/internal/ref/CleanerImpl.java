@@ -29,6 +29,7 @@ import java.lang.ref.Cleaner;
 import java.lang.ref.Cleaner.Cleanable;
 import java.lang.ref.ReferenceQueue;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -148,7 +149,9 @@ public final class CleanerImpl implements Runnable, JDKResource {
             }
             if (forceCleanup) {
                 synchronized (activeList) {
-		    ArrayList<PhantomCleanable<?>> refArr = activeList.filterReferences(ref -> ref.refersTo(null));
+                    ArrayList<PhantomCleanable<?>> refArr = activeList.filterReferences(ref -> ref.refersTo(null));
+                    // only to match the previous behavior
+                    Collections.reverse(refArr);
                     for (var ref : refArr) {
                         try {
                             ref.clean();
