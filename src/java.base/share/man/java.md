@@ -1465,9 +1465,10 @@ These `java` options control the runtime behavior of the Java HotSpot VM.
 
     `report-on-exit=`*identifier*
     :   Specifies the name of the view to display when the Java Virtual Machine
-        (JVM) shuts down. This option is not available if the disk option is set
-        to false. For a list of available views, see `jfr help view`. By default,
-        no report is generated.
+        (JVM) shuts down. To specify more than one view, use the report-on-exit
+        parameter repeatedly. This option is not available if the disk option
+        is set to false. For a list of available views, see `jfr help view`.
+        By default, no report is generated.
 
     `settings=`*path*
     :   Specifies the path and name of the event settings file (of type JFC).
@@ -1529,6 +1530,15 @@ These `java` options control the runtime behavior of the Java HotSpot VM.
     ```
 
     This option is similar to `-Xss`.
+
+`-XX:+UseCompactObjectHeaders`
+:   Enables compact object headers. By default, this option is disabled.
+    Enabling this option reduces memory footprint in the Java heap by
+    4 bytes per object (on average) and often improves performance.
+
+    The feature remains disabled by default while it continues to be evaluated.
+    In a future release it is expected to be enabled by default, and
+    eventually will be the only mode of operation.
 
 `-XX:-UseCompressedOops`
 :   Disables the use of compressed pointers. By default, this option is
@@ -2838,9 +2848,8 @@ Java HotSpot VM.
 `-XX:+UseNUMA`
 :   Enables performance optimization of an application on a machine with
     nonuniform memory architecture (NUMA) by increasing the application's use
-    of lower latency memory. By default, this option is disabled and no
-    optimization for NUMA is made. The option is available only when the
-    parallel garbage collector is used (`-XX:+UseParallelGC`).
+    of lower latency memory. The default value for this option depends on the
+    garbage collector.
 
 `-XX:+UseParallelGC`
 :   Enables the use of the parallel scavenge garbage collector (also known as
@@ -3837,9 +3846,10 @@ general form:
     be loaded on top of those in the `<static_archive>`.
 -   On Windows, the above path delimiter `:` should be replaced with `;`
 
-(The names "static" and "dynamic" are used for historical reasons.
-The only significance is that the "static" archive is loaded first and
-the "dynamic" archive is loaded second).
+The names "static" and "dynamic" are used for historical reasons. The dynamic
+archive, while still useful, supports fewer optimizations than
+available for the static CDS archive. If the full set of CDS/AOT
+optimizations are desired, consider using the AOT cache described below.
 
 The JVM can use up to two archives. To use only a single `<static_archive>`,
 you can omit the `<dynamic_archive>` portion:
