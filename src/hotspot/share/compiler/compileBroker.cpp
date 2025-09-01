@@ -54,6 +54,7 @@
 #include "prims/nativeLookup.hpp"
 #include "prims/whitebox.hpp"
 #include "runtime/atomic.hpp"
+#include "runtime/cracRecompiler.hpp"
 #include "runtime/escapeBarrier.hpp"
 #include "runtime/globals_extension.hpp"
 #include "runtime/handles.inline.hpp"
@@ -1257,6 +1258,15 @@ void CompileBroker::compile_method_base(const methodHandle& method,
       return;
     }
 
+    // Ensure the method has not gotten compiled on a better level since CRaC
+    // recorded its decompilation. We do it this late to ensure there is no race
+    // between the recompilation requesting thread and other threads requesting
+    // compilation through the usual routes.
+    if (compile_reason == CompileTask::Reason_CRaC &&
+        !CRaCRecompiler::is_recompilation_relevant(method, osr_bci, comp_level)) {
+      return;
+    }
+
     // We now know that this compilation is not pending, complete,
     // or prohibited.  Assign a compile_id to this compilation
     // and check to see if it is in our [Start..Stop) range.
@@ -1748,6 +1758,10 @@ void CompileBroker::wait_for_completion(CompileTask* task) {
     // be using this CompileTask; we can free it.
     CompileTask::free(task);
   }
+}
+
+void CompileBroker::wait_for_no_active_tasks() {
+  CompileTask::wait_for_no_active_tasks();
 }
 
 /**

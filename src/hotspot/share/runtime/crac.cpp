@@ -252,9 +252,7 @@ void VM_Crac::doit() {
     os::message_box("Checkpoint failed", "Errors were found during checkpoint.");
   }
 
-  if (!ok && CRaCDoThrowCheckpointException) {
-    return;
-  } else if (_dry_run) {
+  if (!ok || _dry_run) {
     _ok = ok;
     return;
   }
@@ -264,7 +262,7 @@ void VM_Crac::doit() {
   }
 
   int shmid = -1;
-  if (CRaCAllowToSkipCheckpoint) {
+  if (CRaCSkipCheckpoint) {
     log_info(crac)("Skip Checkpoint");
     shmid = 0;
   } else {
@@ -555,7 +553,7 @@ void crac::restore(crac_restore_data& restore_data) {
       }
       const bool write_success = CracRestoreParameters::write_to(
         shmfd,
-        Arguments::jvm_flags_array(), Arguments::num_jvm_flags(),
+        Arguments::jvm_restore_flags_array(), Arguments::num_jvm_restore_flags(),
         Arguments::system_properties(),
         Arguments::java_command_crac() ? Arguments::java_command_crac() : "",
         restore_data.restore_time,
@@ -632,6 +630,11 @@ bool CracRestoreParameters::read_from(int fd) {
       } else {
         *eq = '\0';
         char* value = eq + 1;
+        // A single ccstrlist flag can be specified multiple times meaning those
+        // should be concatenated. But with the current code the last occurence
+        // will just overwrite the previous ones.
+        assert(!JVMFlag::find_flag(cursor)->ccstr_accumulates(),
+               "setting ccstrlist flags on restore is not supported: %s", cursor);
         result = WriteableFlags::set_flag(cursor, value, JVMFlagOrigin::CRAC_RESTORE, err_msg);
         cursor = value + strlen(value) + 1;
       }
