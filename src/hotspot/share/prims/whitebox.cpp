@@ -794,7 +794,7 @@ class VM_WhiteBoxDeoptimizeFrames : public VM_WhiteBoxOperation {
             if (_make_not_entrant) {
                 nmethod* nm = CodeCache::find_nmethod(f->pc());
                 assert(nm != nullptr, "did not find nmethod");
-                nm->make_not_entrant("Whitebox deoptimization", false /* don't interfere with testing */);
+                nm->make_not_entrant(nmethod::ChangeReason::whitebox_deoptimization, false /* don't interfere with testing */);
             }
             ++_result;
           }

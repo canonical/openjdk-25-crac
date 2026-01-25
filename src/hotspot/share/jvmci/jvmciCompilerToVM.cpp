@@ -27,6 +27,7 @@
 #include "classfile/symbolTable.hpp"
 #include "classfile/systemDictionary.hpp"
 #include "classfile/vmClasses.hpp"
+#include "code/nmethod.hpp"
 #include "code/scopeDesc.hpp"
 #include "compiler/compileBroker.hpp"
 #include "compiler/compilerEvent.hpp"
@@ -1206,7 +1207,7 @@ C2V_VMENTRY_0(jint, installCode0, (JNIEnv *env, jobject,
         assert(JVMCIENV->isa_HotSpotNmethod(installed_code_handle), "wrong type");
         // Clear the link to an old nmethod first
         JVMCIObject nmethod_mirror = installed_code_handle;
-        JVMCIENV->invalidate_nmethod_mirror(nmethod_mirror, true, JVMCI_CHECK_0);
+        JVMCIENV->invalidate_nmethod_mirror(nmethod_mirror, true, nmethod::ChangeReason::JVMCI_replacing_with_new_code, JVMCI_CHECK_0);
       } else {
         assert(JVMCIENV->isa_InstalledCode(installed_code_handle), "wrong type");
       }
@@ -1382,7 +1383,7 @@ C2V_VMENTRY(void, reprofile, (JNIEnv* env, jobject, ARGUMENT_PAIR(method)))
 
   nmethod* code = method->code();
   if (code != nullptr) {
-    code->make_not_entrant("JVMCI reprofile", false /* trust the compiler, ideally should be a parameter */);
+    code->make_not_entrant(nmethod::ChangeReason::JVMCI_reprofile, false /* trust the compiler, ideally should be a parameter */);
   }
 
   MethodData* method_data = method->method_data();
@@ -1397,7 +1398,7 @@ C2V_END
 
 C2V_VMENTRY(void, invalidateHotSpotNmethod, (JNIEnv* env, jobject, jobject hs_nmethod, jboolean deoptimize))
   JVMCIObject nmethod_mirror = JVMCIENV->wrap(hs_nmethod);
-  JVMCIENV->invalidate_nmethod_mirror(nmethod_mirror, deoptimize, JVMCI_CHECK);
+  JVMCIENV->invalidate_nmethod_mirror(nmethod_mirror, deoptimize, nmethod::ChangeReason::JVMCI_invalidate_nmethod, JVMCI_CHECK);
 C2V_END
 
 C2V_VMENTRY_NULL(jlongArray, collectCounters, (JNIEnv* env, jobject))
@@ -1822,8 +1823,8 @@ C2V_VMENTRY(void, materializeVirtualObjects, (JNIEnv* env, jobject, jobject _hs_
     if (!fst.current()->is_compiled_frame()) {
       JVMCI_THROW_MSG(IllegalStateException, "compiled stack frame expected");
     }
-    fst.current()->cb()->as_nmethod()->make_not_entrant("JVMCI materialize virtual objects",
-                                                        false /* likely not caused by app state change */);
+    fst.current()->cb()->as_nmethod()->make_not_entrant(nmethod::ChangeReason::JVMCI_materialize_virtual_object,
+		                                        false /* likely not caused by app state change */);
   }
   Deoptimization::deoptimize(thread, *fst.current(), Deoptimization::Reason_none);
   // look for the frame again as it has been updated by deopt (pc, deopt state...)

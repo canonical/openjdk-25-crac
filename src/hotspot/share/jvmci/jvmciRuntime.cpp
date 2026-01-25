@@ -2184,7 +2184,7 @@ JVMCI::CodeInstallResult JVMCIRuntime::register_method(JVMCIEnv* JVMCIENV,
               tty->print_cr("Replacing method %s", method_name);
             }
             if (old != nullptr) {
-              old->make_not_entrant("JVMCI register method", false /* already being replaced */);
+              old->make_not_entrant(nmethod::ChangeReason::JVMCI_register_method, false /* already being replaced */);
             }
 
             LogTarget(Info, nmethod, install) lt;
