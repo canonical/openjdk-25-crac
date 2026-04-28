@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019, 2025, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2019, 2026, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -33,6 +33,7 @@
 #include "jfr/recorder/repository/jfrEmergencyDump.hpp"
 #include "jfr/recorder/service/jfrOptionSet.hpp"
 #include "jfr/recorder/service/jfrOptionSet.hpp"
+#include "jfr/recorder/service/jfrRecorderService.hpp"
 #include "jfr/recorder/repository/jfrRepository.hpp"
 #include "jfr/support/jfrKlassExtension.hpp"
 #include "jfr/support/jfrResolution.hpp"
@@ -46,6 +47,7 @@
 #include "runtime/flags/jvmFlag.hpp"
 #include "runtime/java.hpp"
 #include "runtime/javaThread.hpp"
+
 
 bool Jfr::is_enabled() {
   return JfrRecorder::is_enabled();
@@ -155,9 +157,9 @@ void Jfr::on_resolution(const Method* caller, const Method* target, TRAPS) {
 }
 #endif
 
-void Jfr::on_vm_shutdown(bool emit_old_object_samples, bool emit_event_shutdown, bool halt) {
+void Jfr::on_vm_shutdown(bool exception_handler /* false */, bool halt /* false */, bool oom /* false */) {
   if (!halt && JfrRecorder::is_recording()) {
-    JfrEmergencyDump::on_vm_shutdown(emit_old_object_samples, emit_event_shutdown);
+    JfrEmergencyDump::on_vm_shutdown(exception_handler, oom);
   }
 }
 
@@ -198,5 +200,10 @@ void Jfr::after_restore() {
     // trying to register new file descriptors. Instead we just record a request and
     // the recording will be started at the right moment from JDKResource.
     JfrUpcalls::request_start_after_restore();
+  }
+}
+void Jfr::on_report_java_out_of_memory() {
+  if (CrashOnOutOfMemoryError && JfrRecorder::is_recording()) {
+    JfrRecorderService::emit_leakprofiler_events_on_oom();
   }
 }
