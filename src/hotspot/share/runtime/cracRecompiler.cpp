@@ -32,7 +32,7 @@
 #include "nmt/memTag.hpp"
 #include "oops/klass.inline.hpp"
 #include "oops/metadata.hpp"
-#include "oops/method.hpp"
+#include "oops/method.inline.hpp"
 #include "runtime/handles.hpp"
 #include "runtime/javaThread.hpp"
 #include "runtime/jniHandles.hpp"
