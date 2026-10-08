@@ -400,11 +400,13 @@ public class CracBuilder {
         DockerTestUtils.execute(Container.ENGINE_COMMAND, "kill", CONTAINER_NAME).getExitValue();
 
         // Docker needs some time to remove a container after kill
-        OutputAnalyzer oa = null;
-        do {
-            oa = DockerTestUtils.execute(Container.ENGINE_COMMAND, "ps");
-            oa.getExitValue();
-        } while (oa.getStdout().contains(CONTAINER_NAME));
+        while (
+            DockerTestUtils.execute(
+                Container.ENGINE_COMMAND, "inspect", "--type=container", CONTAINER_NAME
+            ).getExitValue() == 0
+        ) {
+            Thread.onSpinWait();
+        }
 
         List<String> cmd = prepareContainerCommand(imageName, options);
         log("Recreating docker container:\n" + String.join(" ", cmd));
@@ -449,6 +451,10 @@ public class CracBuilder {
         cmd.add(getClassPath());
         if (debug) {
             cmd.add("-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=0.0.0.0:5005");
+        }
+        cmd.addAll(vmOptions);
+        for (var entry : javaOptions.entrySet()) {
+            cmd.add("-D" + entry.getKey() + "=" + entry.getValue());
         }
         cmd.add(main().getName());
         cmd.addAll(Arrays.asList(args()));
