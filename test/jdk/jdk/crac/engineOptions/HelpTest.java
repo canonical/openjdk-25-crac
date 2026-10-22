@@ -30,6 +30,7 @@ import jdk.test.lib.process.ProcessTools;
 * @test
 * @summary Testing -XX:CRaCEngineOptions=help.
 * @library /test/lib
+* @modules java.base/jdk.internal.platform:+open
 */
 public class HelpTest {
     public static void main(String[] args) throws Exception {

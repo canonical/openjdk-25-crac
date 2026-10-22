@@ -36,6 +36,7 @@ import static jdk.test.lib.Asserts.*;
  * @requires (os.family == "linux")
  * @requires container.support
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build ContainerOOMETest
  * @run driver/timeout=120 jdk.test.lib.crac.CracTest
  */

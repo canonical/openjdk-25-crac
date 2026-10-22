@@ -38,6 +38,7 @@ import jdk.test.lib.crac.CracEngine;
  *          should be checkpointable.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  */
 public class CheckpointAfterIgnoredRestoreTest {
     public static void main(String[] args) throws Exception {

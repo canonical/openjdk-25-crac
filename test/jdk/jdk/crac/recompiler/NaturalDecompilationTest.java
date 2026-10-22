@@ -42,6 +42,7 @@ import jdk.test.whitebox.WhiteBox;
  *          WhiteBox to force a method to compile/decompile — this test is
  *          supposed to check a more real-life scenerio instead.
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build jdk.test.whitebox.WhiteBox
  * @run driver jdk.test.lib.helpers.ClassFileInstaller -jar wb.jar jdk.test.whitebox.WhiteBox
  * @build NaturalDecompilationTest

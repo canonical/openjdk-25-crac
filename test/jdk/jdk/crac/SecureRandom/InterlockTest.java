@@ -31,6 +31,7 @@ import java.security.SecureRandom;
  * @summary Verify that secure random is not interlocked during checkpoint/restore.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build InterlockTest
  * @run driver/timeout=60 jdk.test.lib.crac.CracTest SHA1PRNG 100
  * @run driver/timeout=60 jdk.test.lib.crac.CracTest NativePRNGNonBlocking 100

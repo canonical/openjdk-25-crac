@@ -30,6 +30,7 @@ import java.io.IOException;
  * @summary check that the Selector's close() wakes it up after restore
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build Test
  * @run driver jdk.test.lib.crac.CracTest true  false
  * @run driver jdk.test.lib.crac.CracTest false false

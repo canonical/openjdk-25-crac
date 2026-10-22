@@ -38,6 +38,7 @@ import java.util.*;
 * @summary Testing parsing of CRaCEngine and CRaCEngineOptions VM options.
 * @library /test/lib
 * @run junit/othervm ParsingTest
+* @modules java.base/jdk.internal.platform:+open
 */
 public class ParsingTest {
     @BeforeClass

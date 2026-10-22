@@ -40,6 +40,7 @@ import static jdk.test.lib.Asserts.assertLTE;
  * @test
  * @library /test/lib
  * @modules java.base/jdk.internal.perf:+open
+ * @modules java.base/jdk.internal.platform:+open
  * @build ResetStartTimeTest
  * @run driver/timeout=60 jdk.test.lib.crac.CracTest false
  * @run driver/timeout=60 jdk.test.lib.crac.CracTest true

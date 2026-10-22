@@ -39,6 +39,7 @@ import java.lang.reflect.Field;
 /**
  * @test
  * @modules java.base/jdk.internal.ref
+ * @modules java.base/jdk.internal.platform:+open
  * @library /test/lib
  * @build LinkedCleanableRefTest
  * @run driver jdk.test.lib.crac.CracTest

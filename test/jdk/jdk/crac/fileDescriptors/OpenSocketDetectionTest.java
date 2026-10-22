@@ -36,6 +36,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build OpenSocketDetectionTest
  * @run driver/timeout=10 jdk.test.lib.crac.CracTest
  */

@@ -36,6 +36,7 @@ import static jdk.test.lib.Asserts.*;
  * @test Testing CracEngineOptions influenced by CRAC_CRIU_OPTS env variable.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build CracCriuOptsTest
  * @run driver jdk.test.lib.crac.CracTest PREREQ_CHECK
  * @run driver jdk.test.lib.crac.CracTest NOT_SET

@@ -44,6 +44,7 @@ import jdk.test.lib.crac.CracTestArg;
  * @test
  * @summary Tests creating JRT FS and checkpoint'ing with an open file descriptor.
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build JrtFsTest
  * @run driver jdk.test.lib.crac.CracTest true true
  * @run driver jdk.test.lib.crac.CracTest true false

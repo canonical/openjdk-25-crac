@@ -40,6 +40,7 @@ import static jdk.test.lib.Asserts.assertLT;
 /**
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build MXBean
  * @run driver jdk.test.lib.crac.CracTest
  */

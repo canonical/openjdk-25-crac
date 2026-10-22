@@ -31,6 +31,7 @@ import static jdk.test.lib.Asserts.*;
  * @summary pauseengine should pause the execution of the checkpointed process.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build PauseEngineTest
  * @run driver jdk.test.lib.crac.CracTest
  */

@@ -30,6 +30,7 @@ import java.io.IOException;
  * @test RestoreEnvironmentTest
  * @summary the test checks that actual environment variables are propagated into a restored process.
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build RestoreEnvironmentTest
  * @run driver/timeout=120 jdk.test.lib.crac.CracTest
  * @requires (os.family == "linux")

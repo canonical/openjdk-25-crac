@@ -46,6 +46,7 @@ import static jdk.test.lib.Asserts.*;
  * @requires (os.family == "linux")
  * @requires container.support
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build NanoTimeTest
  * @run driver jdk.test.lib.crac.CracTest      0 true
  * @run driver jdk.test.lib.crac.CracTest  86400 true

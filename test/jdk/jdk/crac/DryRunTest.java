@@ -33,6 +33,7 @@ import jdk.test.lib.crac.CracTest;
 /**
  * @test DryRunTest
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build DryRunTest
  * @run driver jdk.test.lib.crac.CracTest
  */

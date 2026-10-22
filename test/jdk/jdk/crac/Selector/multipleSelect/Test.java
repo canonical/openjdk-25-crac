@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @summary check work of multiple select() + wakeup() + C/R
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build Test
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest ONLY_TIMEOUTS false
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest NO_TIMEOUTS false

@@ -46,6 +46,7 @@ import static jdk.test.lib.Asserts.*;
 /**
  * @test ContextOrderTest
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build JdwpTransportTest
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest false false
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest true false

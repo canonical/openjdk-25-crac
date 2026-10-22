@@ -36,6 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @test id=SYSTEM_THREADS
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build PollerTest
  * @run driver/timeout=10 jdk.test.lib.crac.CracTest false SYSTEM_THREADS
  * @run driver/timeout=10 jdk.test.lib.crac.CracTest true SYSTEM_THREADS
@@ -44,6 +45,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @test id=VTHREAD_POLLERS
  * @requires os.family == "linux" | os.family == "mac"
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build PollerTest
  * @run driver/timeout=10 jdk.test.lib.crac.CracTest false VTHREAD_POLLERS
  * @run driver/timeout=10 jdk.test.lib.crac.CracTest true VTHREAD_POLLERS

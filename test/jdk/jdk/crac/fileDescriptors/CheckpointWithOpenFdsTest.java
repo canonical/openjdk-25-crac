@@ -43,6 +43,7 @@ import static jdk.test.lib.Asserts.*;
  *
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build CheckpointWithOpenFdsTest
  * @run driver jdk.test.lib.crac.CracTest
  * @requires (os.family == "linux")

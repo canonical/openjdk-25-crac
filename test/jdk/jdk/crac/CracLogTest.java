@@ -32,6 +32,7 @@ import jdk.test.lib.crac.CracTestArg;
  * @bug 8350569
  * @summary Checks that log set 'crac' can be manipulated via VM options.
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build CracLogTest
  * @run driver jdk.test.lib.crac.CracTest not-set
  * @run driver jdk.test.lib.crac.CracTest off

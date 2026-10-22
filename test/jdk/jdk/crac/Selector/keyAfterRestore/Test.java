@@ -30,6 +30,7 @@ import jdk.test.lib.crac.CracTestArg;
  * @summary a trivial test for SelectionKey's state after restore
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build ChannelResource
  * @build Test
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest true

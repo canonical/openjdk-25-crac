@@ -41,6 +41,7 @@ import jdk.test.lib.util.FileUtils;
  *          main should be launched as usual.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @run main RestoreIfPossibleTest true
  * @run main RestoreIfPossibleTest false
  */

@@ -37,6 +37,7 @@
  * @test
  * @library /test/lib
  * @build FileWatcherAfterRestoreTest
+ * @modules java.base/jdk.internal.platform:+open
  * @run driver jdk.test.lib.crac.CracTest true
  * @run driver jdk.test.lib.crac.CracTest false
  * @requires (os.family == "linux")

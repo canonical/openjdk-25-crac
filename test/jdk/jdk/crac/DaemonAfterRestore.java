@@ -36,6 +36,7 @@ import static jdk.test.lib.Asserts.assertFalse;
  * @test
  * @summary All afterRestore's should complete, even if there are only daemon threads (in case one of the afterRestore's finally creates non-daemon thread that will be responsible to keep VM alive)
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build DaemonAfterRestore
  * @run driver jdk.test.lib.crac.CracTest
  * @requires (os.family == "linux")

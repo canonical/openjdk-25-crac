@@ -39,6 +39,7 @@ import java.util.jar.JarFile;
  * @library /test/lib
  * @modules java.instrument
  *          jdk.jartool/sun.tools.jar
+ *          java.base/jdk.internal.platform:+open
  * @build AddBootEntryTest
  * @run driver jdk.test.lib.crac.CracTest
  */

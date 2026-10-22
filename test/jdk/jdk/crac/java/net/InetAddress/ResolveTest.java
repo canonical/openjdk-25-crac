@@ -41,6 +41,7 @@ import java.util.concurrent.*;
  * @requires (os.family == "linux")
  * @requires container.support
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build ResolveTest
  * @run driver jdk.test.lib.crac.CracTest
  */
