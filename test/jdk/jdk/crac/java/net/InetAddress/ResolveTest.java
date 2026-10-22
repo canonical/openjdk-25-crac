@@ -23,7 +23,6 @@
 
 import jdk.test.lib.Utils;
 import jdk.test.lib.containers.docker.Common;
-import jdk.test.lib.containers.docker.DockerTestUtils;
 import jdk.test.lib.crac.CracBuilder;
 import jdk.test.lib.crac.CracProcess;
 import jdk.test.lib.crac.CracTest;
@@ -56,10 +55,6 @@ public class ResolveTest implements CracTest {
 
     @Override
     public void test() throws Exception {
-        if (!DockerTestUtils.canTestDocker()) {
-            return;
-        }
-
         String imageName = Common.imageName("inet-address");
 
         CracBuilder builder = new CracBuilder()

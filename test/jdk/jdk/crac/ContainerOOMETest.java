@@ -45,9 +45,7 @@ public class ContainerOOMETest implements CracTest {
 
     @Override
     public void test() throws Exception {
-        if (!DockerTestUtils.canTestDocker()) {
-            return;
-        }
+        DockerTestUtils.checkCanUseResourceLimits();
         final String imageName = Common.imageName("oome-test");
         CracBuilder builder = new CracBuilder()
                 .captureOutput(true)

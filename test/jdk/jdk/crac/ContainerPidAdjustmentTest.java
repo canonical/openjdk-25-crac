@@ -23,7 +23,6 @@
 
 import jdk.test.lib.Platform;
 import jdk.test.lib.containers.docker.Common;
-import jdk.test.lib.containers.docker.DockerTestUtils;
 import jdk.test.lib.crac.CracBuilder;
 import jdk.test.lib.crac.CracProcess;
 import jdk.test.lib.crac.CracTest;
@@ -84,9 +83,6 @@ public class ContainerPidAdjustmentTest implements CracTest {
 
     @Override
     public void test() throws Exception {
-        if (!DockerTestUtils.canTestDocker()) {
-            return;
-        }
         final String imageName = Common.imageName("pid-adjustment");
         CracBuilder builder = new CracBuilder()
             .inDockerImage(imageName)
