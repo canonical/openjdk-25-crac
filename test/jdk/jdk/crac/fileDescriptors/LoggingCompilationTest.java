@@ -37,6 +37,7 @@ import jdk.test.lib.crac.CracTestArg;
  * @test Checkpoint with -XX:+LogVMOutput and -XX:+LogCompilation
  * @library /test/lib
  * @modules java.base/jdk.internal.crac:+open
+ * @modules java.base/jdk.internal.platform:+open
  * @requires (os.family == "linux")
  * @build LoggingCompilationTest
  * @run driver jdk.test.lib.crac.CracTest true  false

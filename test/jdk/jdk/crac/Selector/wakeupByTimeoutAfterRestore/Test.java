@@ -30,6 +30,7 @@ import java.io.IOException;
  *          will wake up by timeout after the restore
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build Test
  * @run driver jdk.test.lib.crac.CracTest
  */

@@ -33,6 +33,7 @@ import static jdk.test.lib.Asserts.assertTrue;
 /**
  * @test FlightRecorderCmdlineTest
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @requires (os.family == "linux")
  * @build FlightRecorderTestBase
  * @build FlightRecorderCmdlineTest

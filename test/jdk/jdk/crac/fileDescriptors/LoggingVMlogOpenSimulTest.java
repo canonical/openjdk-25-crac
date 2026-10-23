@@ -37,6 +37,7 @@ import static jdk.test.lib.Asserts.*;
  * @test Check the -XX:+LogVMOutput flag on simulated crac engine
  * @library /test/lib
  * @modules java.base/jdk.internal.crac:+open
+ * @modules java.base/jdk.internal.platform:+open
  * @build LoggingVMlogOpenSimulTest
  * @run driver jdk.test.lib.crac.CracTest
  */

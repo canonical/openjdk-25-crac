@@ -33,6 +33,7 @@ import static jdk.test.lib.Asserts.*;
  * @test
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build OperatingSystemMxBeanTest
  * @run driver jdk.test.lib.crac.CracTest
  */

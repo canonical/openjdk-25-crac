@@ -36,6 +36,7 @@ import jdk.test.whitebox.WhiteBox;
  * @summary Should recompile iff the recorded compilation level was better than
  *          the current one.
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build jdk.test.whitebox.WhiteBox
  * @run driver jdk.test.lib.helpers.ClassFileInstaller -jar wb.jar jdk.test.whitebox.WhiteBox
  * @build CompilationLevelTest

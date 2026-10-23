@@ -39,6 +39,7 @@ import static jdk.test.lib.Asserts.*;
  * @test ContextOrderTest
  * @requires os.family == "linux"
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build PerfMemoryRestoreTest
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest false
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest true

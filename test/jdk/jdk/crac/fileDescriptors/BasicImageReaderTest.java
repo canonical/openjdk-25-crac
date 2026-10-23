@@ -42,6 +42,7 @@ import jdk.internal.jimage.ImageLocation;
  * @summary Tests checkpoint/restore for BasicImageReader with an open descriptor.
  * @library /test/lib
  * @modules java.base/jdk.internal.jimage
+ * @modules java.base/jdk.internal.platform:+open
  * @build BasicImageReaderTest
  * @run driver jdk.test.lib.crac.CracTest true true
  * @run driver jdk.test.lib.crac.CracTest true false

@@ -34,6 +34,7 @@ import static jdk.test.lib.Asserts.*;
 /**
  * @test FailedResourceTest
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build FailedResourceTest
  * @run driver jdk.test.lib.crac.CracTest
  * @requires (os.family == "linux")

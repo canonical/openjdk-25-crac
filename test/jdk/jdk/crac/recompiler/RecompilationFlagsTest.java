@@ -39,6 +39,7 @@ import jdk.test.whitebox.WhiteBox;
  * @summary Tests flags that control recompilation.
  * @modules java.base/java.lang:open
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build jdk.test.whitebox.WhiteBox
  * @run driver jdk.test.lib.helpers.ClassFileInstaller -jar wb.jar jdk.test.whitebox.WhiteBox
  * @build RecompilationFlagsTest

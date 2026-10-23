@@ -35,6 +35,7 @@ import jdk.test.lib.crac.CracEngine;
  *          points to an invalid location VM should proceed without restoring.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @run main InvalidImageLocationTest IMAGE_NOT_EXISTS
  * @run main InvalidImageLocationTest IMAGE_IS_NOT_DIR
  */

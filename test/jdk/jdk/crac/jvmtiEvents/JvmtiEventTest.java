@@ -32,6 +32,7 @@ import jdk.test.lib.crac.CracTest;
  /*
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build JvmtiEventTest
  * @run driver jdk.test.lib.crac.CracTest
  */

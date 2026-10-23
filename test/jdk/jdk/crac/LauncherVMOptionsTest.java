@@ -32,6 +32,7 @@ import static jdk.test.lib.Asserts.*;
 /**
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build LauncherVMOptionsTest
  * @run driver jdk.test.lib.crac.CracTest NONE
  * @run driver jdk.test.lib.crac.CracTest REGULAR

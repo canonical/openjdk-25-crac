@@ -30,6 +30,7 @@ import jdk.test.lib.crac.CracTest;
  * @test
  * @summary Checks that new args are parsed correctly.
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build ArgsParsingTest
  * @run driver/timeout=120 jdk.test.lib.crac.CracTest
  * @requires (os.family == "linux")

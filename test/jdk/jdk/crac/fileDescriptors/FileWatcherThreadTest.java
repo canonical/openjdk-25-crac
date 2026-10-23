@@ -40,6 +40,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * @test Checks the different state of WatchService keys at a checkpoint moment.
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build FileWatcherThreadTest
  * @run driver jdk.test.lib.crac.CracTest true
  * @run driver jdk.test.lib.crac.CracTest false

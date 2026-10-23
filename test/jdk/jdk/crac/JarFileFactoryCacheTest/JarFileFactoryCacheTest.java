@@ -35,6 +35,7 @@ import java.nio.file.Path;
 /**
  * @test JarFileFactoryCacheTest
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build JarFileFactoryCacheTest
  * @run driver jdk.test.lib.crac.CracTest
  */

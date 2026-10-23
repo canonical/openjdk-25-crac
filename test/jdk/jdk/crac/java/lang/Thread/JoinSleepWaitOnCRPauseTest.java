@@ -30,6 +30,7 @@ import java.util.concurrent.CountDownLatch;
  * @test JoinSleepWaitOnCRPauseTest.java
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @summary check if Thread.join(timeout), Thread.sleep(timeout)
  *          and Object.wait(timeout)
  *          will be completed on restore immediately

@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @summary check work of multiple selectNow() + C/R peaceful coexistence
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build Test
  * @run driver jdk.test.lib.crac.CracTest false
  * @run driver jdk.test.lib.crac.CracTest true

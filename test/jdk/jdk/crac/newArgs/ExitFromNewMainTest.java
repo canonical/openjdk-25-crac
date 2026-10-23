@@ -33,6 +33,7 @@ import jdk.test.lib.crac.CracTestArg;
  * @summary Tests System.exit() being called in the new main.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build ExitFromNewMainTest
  * @run driver jdk.test.lib.crac.CracTest true
  * @run driver jdk.test.lib.crac.CracTest false

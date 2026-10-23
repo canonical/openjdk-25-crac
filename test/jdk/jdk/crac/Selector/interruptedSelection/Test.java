@@ -30,6 +30,7 @@ import java.io.IOException;
  * @summary check that the thread blocked by Selector.select() could be properly woken up by an interruption
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build Test
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest true  true  false
  * @run driver/timeout=30 jdk.test.lib.crac.CracTest true  false false

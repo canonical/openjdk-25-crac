@@ -35,6 +35,7 @@ import java.util.concurrent.Future;
  * @test
  * @library /test/lib
  * @modules java.base/jdk.internal.crac:+open
+ * @modules java.base/jdk.internal.platform:+open
  * @build FDPolicyTestBase
  * @build ReopenListeningTestBase
  * @build ReopenListeningAsynchronousSocketChannelTest

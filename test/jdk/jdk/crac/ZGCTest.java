@@ -30,6 +30,7 @@ import jdk.test.lib.crac.CracTest;
 /**
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build ZGCTest
  * @run driver jdk.test.lib.crac.CracTest
  * @requires (os.family == "linux")

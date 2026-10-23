@@ -33,6 +33,7 @@ import jdk.test.lib.crac.CracTest;
  * @summary It should be possible to C/R in a new main.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build CheckpointInNewMainTest
  * @run driver jdk.test.lib.crac.CracTest
  */

@@ -52,6 +52,7 @@ import static jdk.test.lib.Asserts.*;
 /**
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build RemoteJmxTest
  * @run driver jdk.test.lib.crac.CracTest 9995 none
  * @run driver jdk.test.lib.crac.CracTest 9995 10095

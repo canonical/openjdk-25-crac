@@ -31,6 +31,7 @@ import jdk.test.lib.crac.CracTestArg;
  *          is locked depending on mutual order of selector and channel creation")
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build ChannelResource
  * @build Test
  * @run driver jdk.test.lib.crac.CracTest SELECT_NOW true

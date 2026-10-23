@@ -32,6 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @test
  * @summary check that the recursive checkpoint is not allowed
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build RecursiveCheckpointTest
  * @run driver/timeout=60 jdk.test.lib.crac.CracTest 10
  */

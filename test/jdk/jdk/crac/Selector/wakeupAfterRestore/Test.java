@@ -30,6 +30,7 @@ import java.io.IOException;
  * @summary check that the thread blocked by Selector.select() on checkpoint could be properly woken up after restore
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build Test
  * @run driver jdk.test.lib.crac.CracTest true
  * @run driver jdk.test.lib.crac.CracTest false

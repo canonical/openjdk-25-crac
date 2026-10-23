@@ -40,6 +40,7 @@ import static jdk.test.lib.Asserts.assertTrue;
 /*
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build OpenStreamTest
  * @run driver/timeout=15 jdk.test.lib.crac.CracTest
  */

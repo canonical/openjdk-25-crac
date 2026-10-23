@@ -39,6 +39,7 @@ import jdk.test.lib.process.OutputAnalyzer;
  * @summary New main should run only if C/R succeeds.
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build FailedCheckpointRestoreTest
  * @run driver jdk.test.lib.crac.CracTest CHECKPOINT_EXCEPTION
  * @run driver jdk.test.lib.crac.CracTest RESTORE_EXCEPTION

@@ -27,6 +27,7 @@
 /*
  * @test
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @run main CracRestoreSettablePrintFlags
  */
 public class CracRestoreSettablePrintFlags {

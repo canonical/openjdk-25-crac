@@ -36,6 +36,7 @@ import jdk.test.lib.crac.CracEngine;
  * @comment The test needs crexec as a dynamic library.
  * @requires !jdk.static
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  */
 public class EngineFailureTest {
     private static final String MAIN_MSG = "Hello, world!";

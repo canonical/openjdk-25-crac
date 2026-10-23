@@ -32,6 +32,7 @@ import java.nio.channels.Selector;
  *          covers ZE-983
  * @requires (os.family == "linux")
  * @library /test/lib
+ * @modules java.base/jdk.internal.platform:+open
  * @build Test
  * @run driver jdk.test.lib.crac.CracTest true  false false
  * @run driver jdk.test.lib.crac.CracTest true  false true

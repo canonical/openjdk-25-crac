@@ -45,6 +45,7 @@ import static jdk.test.lib.Asserts.assertEquals;
  * @requires (os.family == "linux")
  * @library /test/lib
  * @modules jdk.jartool/sun.tools.jar
+ * @modules java.base/jdk.internal.platform:+open
  * @build crac.fileDescriptors.PatchModuleTest
  * @run driver jdk.test.lib.crac.CracTest
  */
