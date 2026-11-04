@@ -1,7 +1,7 @@
 [general]
 project=crac
 jbs=JDK
-version=25.0.5
+version=25.0.5.0.3
 
 [checks]
 error=whitespace
