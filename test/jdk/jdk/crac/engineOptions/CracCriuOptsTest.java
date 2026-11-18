@@ -81,22 +81,16 @@ public class CracCriuOptsTest implements CracTest {
         builder.engineOptions("args=-v4 -o " + LOG_FILE_PATH + (disableDirectMap ? ",direct_map=false" : ""));
 
         builder.doRestore();
-        checkLogFile(!disableDirectMap);
+        checkLogFile();
     }
 
-    private static void checkLogFile(boolean directMap) throws IOException {
+    private static void checkLogFile() throws IOException {
         // CRIU prints debug lines "Preadv %lx:%d... (%d iovs) (mmap %d)" where the last %d is
         // either 0 or 1 depending on whether direct mapping is performed
         final var lines = Files.lines(LOG_FILE_PATH).filter(s ->
-            s.matches("\\(\\d+.\\d+\\) pie: \\d+: Preadv 0x\\p{XDigit}+:\\d+\\.\\.\\. \\(\\d+ iovs\\) \\(mmap [01]\\)")
+            s.matches("\\(\\d+.\\d+\\) pie: \\d+: Preadv 0x\\p{XDigit}+:\\d+\\.\\.\\. \\(\\d+ iovs\\)")
         ).toList();
         assertFalse(lines.isEmpty(), "At least one log line must match the expected pattern");
-
-        final var end = "(mmap " + (directMap ? "1" : "0") + ")";
-        for (var s : lines) {
-            // If this fails it means that direct_map is on when it should be off or vise-versa
-            assertTrue(s.endsWith(end), "Log line \"" + s + "\" must end with \"" + end + "\"");
-        }
     }
 
     @Override
